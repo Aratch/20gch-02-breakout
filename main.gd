@@ -46,7 +46,7 @@ func _input(event: InputEvent) -> void:
 
 func _ready() -> void:
 	ball = $Ball
-	$Ball.ball_exited.connect(_point_and_round)
+	# $Ball.ball_exited.connect(_point_and_round)
 	
 	game_paused.connect($Ball.pause)
 	game_paused.connect($Paddle.pause)

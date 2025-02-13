@@ -8,7 +8,7 @@ var collision_shape : CircleShape2D
 var ball_sprite : BallSprite
 var vis_notifier : VisibleOnScreenNotifier2D
 
-const START_DIRECTIONS := [Vector2.LEFT, Vector2.RIGHT]
+const START_DIRECTIONS := [Vector2.UP]
 
 signal ball_exited
 
@@ -68,9 +68,9 @@ func _physics_process(delta: float) -> void:
 		if collider:
 			if collider is CharacterBody2D:
 				var collider_velocity := (collider as CharacterBody2D).velocity
-				velocity = (normal + 0.01 * collider_velocity).normalized()
+				velocity = (normal + 0.001 * collider_velocity).normalized()
 			else:
-				velocity = Vector2(velocity.x, -velocity.y)
+				velocity = normal
 		# Add some jitter if we're stuck
 		if collision.get_depth() > 0.3 and is_zero_approx(velocity.x):
 			velocity.x = randfn(0.0, 1.0)
