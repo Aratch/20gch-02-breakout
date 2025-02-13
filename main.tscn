@@ -1,0 +1,125 @@
+[gd_scene load_steps=8 format=3 uid="uid://bwj3wqpjf7a6p"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_gt83v"]
+[ext_resource type="PackedScene" uid="uid://d314agckqwoeo" path="res://scenes/paddle.tscn" id="1_uhfkt"]
+[ext_resource type="PackedScene" uid="uid://p4n84krlbpj8" path="res://scenes/ball.tscn" id="2_kadcf"]
+[ext_resource type="Script" path="res://scripts/ScoreLabel.gd" id="3_glop4"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="3_mwurp"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_7xejs"]
+distance = -650.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ywypa"]
+normal = Vector2(0, 1)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_gt83v")
+
+[node name="Paddle" parent="." instance=ExtResource("1_uhfkt")]
+position = Vector2(144, 240)
+is_player = true
+
+[node name="Paddle2" parent="." instance=ExtResource("1_uhfkt")]
+position = Vector2(976, 240)
+script = ExtResource("3_mwurp")
+
+[node name="BrainFreezeTimer" type="Timer" parent="Paddle2"]
+
+[node name="Boundaries" type="StaticBody2D" parent="."]
+
+[node name="Bottom" type="CollisionShape2D" parent="Boundaries"]
+shape = SubResource("WorldBoundaryShape2D_7xejs")
+
+[node name="Top" type="CollisionShape2D" parent="Boundaries"]
+shape = SubResource("WorldBoundaryShape2D_ywypa")
+
+[node name="Player1ScoreLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "0"
+script = ExtResource("3_glop4")
+metadata/_edit_lock_ = true
+
+[node name="Player2ScoreLabel" type="Label" parent="."]
+offset_left = 1024.0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "0"
+script = ExtResource("3_glop4")
+
+[node name="Ball" parent="." instance=ExtResource("2_kadcf")]
+position = Vector2(560, 256)
+
+[node name="MenuLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="MenuContainer" type="CenterContainer" parent="MenuLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="MenuPanel" type="PanelContainer" parent="MenuLayer/MenuContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuLayer/MenuContainer/MenuPanel"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="MenuLayer/MenuContainer/MenuPanel/VBoxContainer"]
+custom_minimum_size = Vector2(500, 50)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MenuLayer/MenuContainer/MenuPanel/VBoxContainer"]
+layout_mode = 2
+text = "Breakout"
+horizontal_alignment = 1
+
+[node name="Spacer2" type="Control" parent="MenuLayer/MenuContainer/MenuPanel/VBoxContainer"]
+custom_minimum_size = Vector2(500, 15)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StartGameButton" type="Button" parent="MenuLayer/MenuContainer/MenuPanel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Start Game"
+
+[node name="Spacer6" type="Control" parent="MenuLayer/MenuContainer/MenuPanel/VBoxContainer"]
+custom_minimum_size = Vector2(500, 15)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ResumeButton" type="Button" parent="MenuLayer/MenuContainer/MenuPanel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Resume"
+
+[node name="Spacer3" type="Control" parent="MenuLayer/MenuContainer/MenuPanel/VBoxContainer"]
+custom_minimum_size = Vector2(500, 50)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RestartGameButton" type="Button" parent="MenuLayer/MenuContainer/MenuPanel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+disabled = true
+text = "Restart Game"
+
+[node name="Spacer5" type="Control" parent="MenuLayer/MenuContainer/MenuPanel/VBoxContainer"]
+custom_minimum_size = Vector2(500, 50)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="QuitButton" type="Button" parent="MenuLayer/MenuContainer/MenuPanel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit"
+
+[node name="Spacer4" type="Control" parent="MenuLayer/MenuContainer/MenuPanel/VBoxContainer"]
+custom_minimum_size = Vector2(500, 50)
+layout_mode = 2
+size_flags_vertical = 3

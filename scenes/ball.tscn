@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://p4n84krlbpj8"]
+
+[ext_resource type="Script" path="res://scripts/ball.gd" id="1_gbcbo"]
+[ext_resource type="Script" path="res://scripts/ball_sprite.gd" id="1_y8bic"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3h733"]
+radius = 25.0
+
+[node name="Ball" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_gbcbo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3h733")
+
+[node name="BallSprite" type="Sprite2D" parent="."]
+script = ExtResource("1_y8bic")
+radius = 25
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(-12.5, -12.5, 25, 25)
