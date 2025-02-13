@@ -1,10 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bwj3wqpjf7a6p"]
+[gd_scene load_steps=7 format=3 uid="uid://bwj3wqpjf7a6p"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_gt83v"]
 [ext_resource type="PackedScene" uid="uid://d314agckqwoeo" path="res://scenes/paddle.tscn" id="1_uhfkt"]
 [ext_resource type="PackedScene" uid="uid://p4n84krlbpj8" path="res://scenes/ball.tscn" id="2_kadcf"]
 [ext_resource type="Script" path="res://scripts/ScoreLabel.gd" id="3_glop4"]
-[ext_resource type="Script" path="res://scripts/enemy.gd" id="3_mwurp"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_7xejs"]
 distance = -650.0
@@ -18,12 +17,6 @@ script = ExtResource("1_gt83v")
 [node name="Paddle" parent="." instance=ExtResource("1_uhfkt")]
 position = Vector2(144, 240)
 is_player = true
-
-[node name="Paddle2" parent="." instance=ExtResource("1_uhfkt")]
-position = Vector2(976, 240)
-script = ExtResource("3_mwurp")
-
-[node name="BrainFreezeTimer" type="Timer" parent="Paddle2"]
 
 [node name="Boundaries" type="StaticBody2D" parent="."]
 

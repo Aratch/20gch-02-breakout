@@ -46,25 +46,18 @@ func _on_game_ready() -> void:
 func _input(event: InputEvent) -> void:
 	if Engine.is_editor_hint():
 		return
-	if is_player and \
-		event.is_action_released(&"move_up") or \
-		event.is_action_released(&"move_down"):
+	if InputActions.is_any_released(event, [InputActions.MOVE_LEFT,
+	InputActions.MOVE_RIGHT]):
 		velocity = Vector2.ZERO
-	else:
-		if event.is_action_released(&"p2_move_up") or \
-			event.is_action_released(&"p2_move_down"):
-				velocity = Vector2.ZERO
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-	if is_player:
-		direction = Input.get_axis(&"move_up", &"move_down")
-	#else:
-		#direction = Input.get_axis(&"p2_move_up", &"p2_move_down")
+	
+	direction = Input.get_axis(InputActions.MOVE_LEFT, InputActions.MOVE_RIGHT)
 	
 	if direction:
-		velocity.y = direction * SPEED
+		velocity.x = direction * SPEED
 	
 	var collision := move_and_collide(velocity * delta)
 	if collision:

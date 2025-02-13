@@ -19,7 +19,6 @@ func _point_and_round() -> void:
 
 func _start_new_round() -> void:
 	$Paddle._start_game()
-	$Paddle2._start_game()
 	$Ball._start_game()
 
 func pause() -> void:
@@ -51,11 +50,9 @@ func _ready() -> void:
 	
 	game_paused.connect($Ball.pause)
 	game_paused.connect($Paddle.pause)
-	game_paused.connect($Paddle2.pause)
 	
 	game_unpaused.connect($Ball.unpause)
 	game_unpaused.connect($Paddle.unpause)
-	game_unpaused.connect($Paddle2.unpause)
 	
 	%StartGameButton.pressed.connect(func():
 		game_ready.emit()
