@@ -10,9 +10,11 @@ var ball: Ball
 
 var started := false
 
+var bricks : Array[Brick] = []
+
 func _on_ball_exited() -> void:
 	%LivesLabel.subtract_life()
-	_start_new_round()
+#	_start_new_round()
 
 func _start_new_round() -> void:
 	$Paddle._start_game()
@@ -23,14 +25,20 @@ func pause() -> void:
 	game_paused.emit()
 	%MenuLayer.show()
 
+func game_over() -> void:
+	paused = true
+	game_paused.emit()
+	print("Emitted game_paused but...")
+	%MenuLayer.reset()
+	%MenuLayer.show_gameover()
+
 func unpause() -> void:
 	paused = false
 	%MenuLayer.hide()
 	game_unpaused.emit()
 
 func restart() -> void:
-	$Player1ScoreLabel.reset()
-	$Player2ScoreLabel.reset()
+	%ScoreLabel.reset()
 	unpause()
 	_start_new_round()
 
@@ -42,6 +50,10 @@ func _input(event: InputEvent) -> void:
 			unpause()
 
 func _ready() -> void:
+	for node in get_tree().get_nodes_in_group(&"bricks"):
+		var brick := node as Brick
+		bricks.append(brick)
+		
 	ball = $Ball
 	$Ball.ball_exited.connect(_on_ball_exited)
 	
@@ -62,3 +74,12 @@ func _ready() -> void:
 		restart())
 	%MenuLayer.quit_button.pressed.connect(func():
 		get_tree().quit())
+		
+	EventBus.brick_broken.connect(func(which: Brick):
+		%ScoreLabel.add_point()
+		bricks.erase(which)
+		if bricks.is_empty():
+			print("YOU WIN")
+		)
+	
+	%LivesLabel.lives_at_zero.connect(game_over)

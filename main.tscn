@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bwj3wqpjf7a6p"]
+[gd_scene load_steps=12 format=3 uid="uid://bwj3wqpjf7a6p"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_gt83v"]
 [ext_resource type="PackedScene" uid="uid://d314agckqwoeo" path="res://scenes/paddle.tscn" id="1_uhfkt"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/score_label.gd" id="3_glop4"]
 [ext_resource type="Script" path="res://scripts/lives_label.gd" id="5_xxxfr"]
 [ext_resource type="PackedScene" uid="uid://bjeybdkbf0rro" path="res://scenes/menu_layer.tscn" id="7_fh1wi"]
+[ext_resource type="PackedScene" uid="uid://chtlfbi823pw2" path="res://scenes/brick.tscn" id="8_amsgt"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_7xejs"]
 normal = Vector2(1, 0)
@@ -43,6 +44,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="ScoreLabel" type="Label" parent="TopLeftHUD"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "0"
 label_settings = ExtResource("3_b4grb")
@@ -59,3 +61,10 @@ position = Vector2(560, 256)
 
 [node name="MenuLayer" parent="." instance=ExtResource("7_fh1wi")]
 unique_name_in_owner = true
+visible = false
+
+[node name="Brick" parent="." instance=ExtResource("8_amsgt")]
+position = Vector2(385, 76)
+
+[node name="Brick2" parent="." instance=ExtResource("8_amsgt")]
+position = Vector2(655, 77)

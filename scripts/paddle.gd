@@ -5,7 +5,7 @@ extends CharacterBody2D
 var collision_shape : RectangleShape2D
 var color_rect : ColorRect
 
-const SPEED = 300.0
+const SPEED = 500.0
 
 var direction : float
 
@@ -32,6 +32,8 @@ func _ready() -> void:
 			)
 	else:
 		get_owner().game_ready.connect(_on_game_ready)
+		EventBus.game_paused.connect(pause)
+		EventBus.game_unpaused.connect(unpause)
 
 func _on_game_ready() -> void:
 	_start_game()

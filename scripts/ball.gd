@@ -52,6 +52,8 @@ func _ready() -> void:
 		vis_notifier.screen_exited.connect(func():
 			ball_exited.emit())
 		get_owner().game_ready.connect(_on_game_ready)
+		EventBus.game_paused.connect(pause)
+		EventBus.game_unpaused.connect(unpause)
 		
 func _on_game_ready() -> void:
 	_start_game()
@@ -67,6 +69,10 @@ func _physics_process(delta: float) -> void:
 		var collider := collision.get_collider()
 		if collider:
 			var collider_velocity : Vector2 = Vector2.ZERO	
+			if collider is Brick:
+				var brick = collider as Brick
+				brick.take_damage()
+				
 			if collider is CharacterBody2D:
 				collider_velocity = (collider as CharacterBody2D).velocity
 				velocity = (normal + 0.001 * collider_velocity).normalized()
