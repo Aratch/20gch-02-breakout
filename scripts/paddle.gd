@@ -21,13 +21,6 @@ func unpause() -> void:
 
 func _start_game() -> void:
 	unpause()
-	# var window_size := DisplayServer.window_get_size()
-	# position.y = window_size.y / 2.0
-	# var ratio = 7.0
-	# if is_player:
-		# position.x = window_size.x / ratio
-	# else:
-		# position.x = (ratio - 1) * (window_size.x / ratio)
 
 func _ready() -> void:
 	pause()
