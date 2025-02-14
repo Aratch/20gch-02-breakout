@@ -66,11 +66,13 @@ func _physics_process(delta: float) -> void:
 		var normal := collision.get_normal()
 		var collider := collision.get_collider()
 		if collider:
+			var collider_velocity : Vector2 = Vector2.ZERO	
 			if collider is CharacterBody2D:
-				var collider_velocity := (collider as CharacterBody2D).velocity
+				collider_velocity = (collider as CharacterBody2D).velocity
 				velocity = (normal + 0.001 * collider_velocity).normalized()
 			else:
-				velocity = normal
+				# velocity *= -1
+				velocity = velocity.bounce(normal)
 		# Add some jitter if we're stuck
 		if collision.get_depth() > 0.3 and is_zero_approx(velocity.x):
 			velocity.x = randfn(0.0, 1.0)
