@@ -14,10 +14,11 @@ var bricks : Array[Brick] = []
 
 func _on_ball_exited() -> void:
 	%LivesLabel.subtract_life()
-#	_start_new_round()
+	if %LivesLabel.lives > 0:
+		_start_new_round()
 
 func _start_new_round() -> void:
-	$Paddle._start_game()
+	#$Paddle._start_game()
 	$Ball._start_game()
 
 func pause() -> void:
@@ -28,9 +29,14 @@ func pause() -> void:
 func game_over() -> void:
 	paused = true
 	game_paused.emit()
-	print("Emitted game_paused but...")
 	%MenuLayer.reset()
 	%MenuLayer.show_gameover()
+
+func game_won() -> void:
+	paused = true
+	game_paused.emit()
+	%MenuLayer.reset()
+	%MenuLayer.show_winscreen()
 
 func unpause() -> void:
 	paused = false
@@ -39,6 +45,7 @@ func unpause() -> void:
 
 func restart() -> void:
 	%ScoreLabel.reset()
+	%LivesLabel.reset()
 	unpause()
 	_start_new_round()
 
@@ -79,7 +86,7 @@ func _ready() -> void:
 		%ScoreLabel.add_point()
 		bricks.erase(which)
 		if bricks.is_empty():
-			print("YOU WIN")
+			game_won()
 		)
 	
 	%LivesLabel.lives_at_zero.connect(game_over)

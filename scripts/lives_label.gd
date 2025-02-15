@@ -1,7 +1,7 @@
 class_name LivesLabel
 extends Label
 
-const START_LIVES = 1
+const START_LIVES = 3
 
 signal lives_at_zero
 

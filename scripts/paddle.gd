@@ -41,9 +41,9 @@ func _on_game_ready() -> void:
 func _input(event: InputEvent) -> void:
 	if Engine.is_editor_hint():
 		return
-	if InputActions.is_any_released(event, [InputActions.MOVE_LEFT,
-	InputActions.MOVE_RIGHT]):
-		velocity = Vector2.ZERO
+	#if InputActions.is_any_released(event, [InputActions.MOVE_LEFT,
+	#InputActions.MOVE_RIGHT]):
+		#velocity = Vector2.ZERO
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -51,8 +51,13 @@ func _physics_process(delta: float) -> void:
 	
 	direction = Input.get_axis(InputActions.MOVE_LEFT, InputActions.MOVE_RIGHT)
 	
+	const accel = 500.0
+	
 	if direction:
-		velocity.x = direction * SPEED
+		var desired_velocity := direction * SPEED
+		velocity.x = move_toward(velocity.x, desired_velocity, delta * accel)
+	elif not direction and not is_zero_approx(velocity.x):
+		velocity = velocity.move_toward(Vector2.ZERO, delta * accel)
 	
 	var collision := move_and_collide(velocity * delta)
 	if collision:

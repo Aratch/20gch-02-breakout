@@ -18,6 +18,10 @@ func show_gameover() -> void:
 	%InfoLabel.text = "Game Over! How about another game?"
 	show()
 
+func show_winscreen() -> void:
+	%InfoLabel.text = "You win!"
+	show()
+
 func start_game() -> void:
 	hide()
 	%InfoLabel.text = "Game in Progress"
