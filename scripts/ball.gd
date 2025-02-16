@@ -8,9 +8,10 @@ var collision_shape : CircleShape2D
 var ball_sprite : BallSprite
 var vis_notifier : VisibleOnScreenNotifier2D
 
-const START_DIRECTIONS := [Vector2.UP]
+var stationary := false
 
 signal ball_exited
+signal ball_to_paddle_requested
 
 func _set_up_setters():
 	collision_shape.changed.connect(func ():
@@ -23,16 +24,29 @@ func _set_up_setters():
 		)
 
 func _set_to_initial_pos() -> void:
-	var window_size := DisplayServer.window_get_size()
-	position.x = window_size.x / 2.0
-	position.y = window_size.y / 2.0
+	stationary = true
+	velocity = Vector2.ZERO
+	current_speed = 0.0
+	##top_level = false
+	#set_deferred(&"top_level", false)
+	ball_to_paddle_requested.emit()
 
 func _start_game() -> void:
-	unpause()
+	#unpause()
 	_set_to_initial_pos()
+
+func shoot():
+	unpause()
+	#top_level = true
+	#set_deferred(&"top_level", true)
 	current_speed = SPEED
-	velocity = START_DIRECTIONS.pick_random()
+	velocity = Vector2.UP
+	stationary = false
 	
+func _input(event: InputEvent) -> void:
+	if stationary and event.is_action_pressed(&"shoot"):
+		shoot()
+
 func pause() -> void:
 	set_physics_process(false)
 

@@ -19,7 +19,7 @@ func _on_ball_exited() -> void:
 
 func _start_new_round() -> void:
 	#$Paddle._start_game()
-	$Ball._start_game()
+	%Ball._start_game()
 
 func pause() -> void:
 	paused = true
@@ -56,23 +56,33 @@ func _input(event: InputEvent) -> void:
 		else:
 			unpause()
 
+func move_ball_to_paddle():
+	%Ball.global_position = $Paddle.ball_marker.global_position
+
+func _physics_process(delta: float) -> void:
+	if %Ball.stationary:
+		%Ball.global_position = $Paddle.ball_marker.global_position
+
 func _ready() -> void:
 	for node in get_tree().get_nodes_in_group(&"bricks"):
 		var brick := node as Brick
 		bricks.append(brick)
 		
-	ball = $Ball
-	$Ball.ball_exited.connect(_on_ball_exited)
+	ball = %Ball
+	%Ball.ball_exited.connect(_on_ball_exited)
+	%Ball.ball_to_paddle_requested.connect(move_ball_to_paddle)
 	
-	game_paused.connect($Ball.pause)
+	game_paused.connect(%Ball.pause)
 	game_paused.connect($Paddle.pause)
 	
-	game_unpaused.connect($Ball.unpause)
+	game_unpaused.connect(%Ball.unpause)
 	game_unpaused.connect($Paddle.unpause)
+	
 	
 	%MenuLayer.start_game_button.pressed.connect(func():
 		game_ready.emit()
 		started = true
+		%LivesLabel.reset()
 		%MenuLayer.start_game()
 		)
 	%MenuLayer.resume_button.pressed.connect(func():

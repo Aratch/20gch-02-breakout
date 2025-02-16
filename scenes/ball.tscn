@@ -7,6 +7,7 @@
 radius = 25.0
 
 [node name="Ball" type="CharacterBody2D"]
+top_level = true
 motion_mode = 1
 script = ExtResource("1_gbcbo")
 

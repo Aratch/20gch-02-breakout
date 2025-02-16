@@ -25,3 +25,6 @@ grow_vertical = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1.5, -0.5)
 shape = SubResource("RectangleShape2D_e2jd4")
+
+[node name="BallMarker" type="Marker2D" parent="."]
+position = Vector2(-50, 0)

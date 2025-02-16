@@ -4,6 +4,7 @@ extends CharacterBody2D
 
 var collision_shape : RectangleShape2D
 var color_rect : ColorRect
+@onready var ball_marker : Marker2D = $BallMarker
 
 const SPEED = 800.0
 const ACCEL = 1000.0
