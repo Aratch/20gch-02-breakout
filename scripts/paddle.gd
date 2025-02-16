@@ -5,7 +5,8 @@ extends CharacterBody2D
 var collision_shape : RectangleShape2D
 var color_rect : ColorRect
 
-const SPEED = 500.0
+const SPEED = 800.0
+const ACCEL = 1000.0
 
 var direction : float
 
@@ -48,17 +49,16 @@ func _input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-	
+		
 	direction = Input.get_axis(InputActions.MOVE_LEFT, InputActions.MOVE_RIGHT)
-	
-	const accel = 500.0
-	
 	if direction:
 		var desired_velocity := direction * SPEED
-		velocity.x = move_toward(velocity.x, desired_velocity, delta * accel)
+		velocity.x = move_toward(velocity.x, desired_velocity, delta * ACCEL)
 	elif not direction and not is_zero_approx(velocity.x):
-		velocity = velocity.move_toward(Vector2.ZERO, delta * accel)
+		velocity = velocity.move_toward(Vector2.ZERO, 2.0 * delta * ACCEL)
 	
 	var collision := move_and_collide(velocity * delta)
 	if collision:
-		pass # this works as expected
+		if collision.get_collider() is StaticBody2D:
+			# Assuming that we're hitting Boundaries (StaticBody2D)
+			velocity = Vector2.ZERO

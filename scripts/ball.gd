@@ -54,6 +54,8 @@ func _ready() -> void:
 		get_owner().game_ready.connect(_on_game_ready)
 		EventBus.game_paused.connect(pause)
 		EventBus.game_unpaused.connect(unpause)
+		EventBus.brick_broken.connect(func(_which: Brick):
+			current_speed += 15.0)
 		
 func _on_game_ready() -> void:
 	_start_game()
@@ -64,7 +66,6 @@ func _physics_process(delta: float) -> void:
 	
 	var collision := move_and_collide(velocity * delta * current_speed)
 	if collision:
-		current_speed += 15.0
 		var normal := collision.get_normal()
 		var collider := collision.get_collider()
 		if collider:
@@ -72,7 +73,6 @@ func _physics_process(delta: float) -> void:
 			if collider is Brick:
 				var brick = collider as Brick
 				brick.take_damage()
-				
 			if collider is CharacterBody2D:
 				collider_velocity = (collider as CharacterBody2D).velocity
 				velocity = (normal + 0.001 * collider_velocity).normalized()
